@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AppSetup\" />
+    <Folder Include="Controls\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

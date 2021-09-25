@@ -8,7 +8,7 @@ namespace Demo.Movie.Core.ViewModels.MVVM
 {
     public class BaseViewModel : INotifyPropertyChanged, IViewModel
     {
-        protected bool _isLoading = true;
+        protected bool _isLoading = true, _isRefreshing = false, _isClicked = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -16,6 +16,12 @@ namespace Demo.Movie.Core.ViewModels.MVVM
         {
             get => _isLoading;
             set => RaiseAndUpdate(ref _isLoading, value);
+        }
+
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => RaiseAndUpdate(ref _isRefreshing, value);
         }
 
         public virtual Task InitAsync() => Task.FromResult(true);

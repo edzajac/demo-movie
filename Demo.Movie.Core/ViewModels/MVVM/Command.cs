@@ -71,6 +71,11 @@ namespace Demo.Movie.Core.ViewModels.MVVM
             _execute(parameter);
         }
 
+        public void Execute()
+        {
+            _execute(null);
+        }
+
         public void ChangeCanExecute()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);

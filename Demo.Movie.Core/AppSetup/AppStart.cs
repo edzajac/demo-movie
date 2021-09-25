@@ -1,5 +1,7 @@
 ﻿
 using Autofac;
+using Demo.Movie.Core.Interfaces;
+using Demo.Movie.Core.Services;
 using Demo.Movie.Core.ViewModels;
 
 namespace Demo.Movie.Core.AppSetup
@@ -19,10 +21,11 @@ namespace Demo.Movie.Core.AppSetup
         {
             // Services
 
+            builder.RegisterType<MovieService>().As<IMovieService>().SingleInstance();
 
             // View Models
 
-            builder.RegisterType<LandingPageViewModel>().SingleInstance();
+            builder.RegisterType<LandingPageViewModel>().UsingConstructor(typeof(IMovieService)).SingleInstance();
         }
     }
 

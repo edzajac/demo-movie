@@ -22,9 +22,9 @@ namespace Demo.Movie.Views.MVVM
         /// </summary>
         public BaseView()
         {
-            _viewModel = AppContainer.Container.Resolve<T>();
+            BackgroundColor = Color.Black;
 
-            NavigationPage.SetBackButtonTitle(this, "Back"); //TODO: determine if necessary for future apps?
+            _viewModel = AppContainer.Container.Resolve<T>();
 
             BindingContext = _viewModel;
         }

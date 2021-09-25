@@ -9,13 +9,21 @@
     <None Remove="ViewModels\MVVM\" />
     <None Remove="AppSetup\" />
     <None Remove="Autofac" />
+    <None Remove="Interfaces\" />
+    <None Remove="Services\" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Model\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
     <Folder Include="ViewModels\MVVM\" />
     <Folder Include="AppSetup\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
+    <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 </Project>

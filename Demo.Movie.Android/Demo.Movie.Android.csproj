@@ -86,6 +86,7 @@
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="AppSetup\" />
+    <Folder Include="Controls\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Demo.Movie\Demo.Movie.csproj">
