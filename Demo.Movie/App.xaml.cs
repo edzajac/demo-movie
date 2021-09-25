@@ -1,16 +1,18 @@
-﻿using System;
+﻿using Demo.Movie.Core.AppSetup;
+using Demo.Movie.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Demo.Movie
 {
     public partial class App : Application
     {
-        public App()
+        public App(AppStart onStart)
         {
+            AppContainer.Container = onStart.InitializeDependencies();
+
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new LandingPage();
         }
 
         protected override void OnStart()

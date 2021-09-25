@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<mvvm:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:mvvm="clr-namespace:Demo.Movie.Views.MVVM"
+               xmlns:vm="clr-namespace:Demo.Movie.Core.ViewModels;assembly=Demo.Movie.Core"
+               x:Class="Demo.Movie.Views.LandingPage"
+               x:TypeArguments="vm:LandingPageViewModel">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Hello World!"
+                   HorizontalOptions="Center"/>
+        </StackLayout>
+    </ContentPage.Content>
+</mvvm:BaseView>

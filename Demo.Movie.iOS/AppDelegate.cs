@@ -23,7 +23,10 @@ namespace Demo.Movie.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+
+            var initialize = new AppSetup.OnStart();
+
+            LoadApplication(new App(initialize));
 
             return base.FinishedLaunching(app, options);
         }
