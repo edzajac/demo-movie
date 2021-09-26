@@ -5,6 +5,24 @@
                xmlns:vm="clr-namespace:Demo.Movie.Core.ViewModels;assembly=Demo.Movie.Core"
                x:Class="Demo.Movie.Views.LandingPage"
                x:TypeArguments="vm:LandingPageViewModel">
+    <NavigationPage.TitleView>
+        <StackLayout HorizontalOptions="CenterAndExpand"
+                     VerticalOptions="End">
+            <Label HorizontalOptions="Center"
+                   VerticalOptions="End">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="MOVIE "
+                              TextColor="{StaticResource Key=LightPurple}"
+                              Style="{StaticResource Key=LabelNavBarHeaderStyle}"/>
+                        <Span Text="TIME" 
+                              TextColor="{StaticResource Key=DarkPurple}"
+                              Style="{StaticResource Key=LabelNavBarHeaderStyle}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+    </NavigationPage.TitleView>
     <ContentPage.Content>
         <StackLayout>
             <ListView x:Name="GenreListView"
@@ -14,7 +32,8 @@
                       IsRefreshing="{Binding IsLoading}"
                       SeparatorVisibility="None"
                       ItemSelected="GenreListView_ItemSelected"
-                      HasUnevenRows="True">
+                      HasUnevenRows="True"
+                      IsVisible="{Binding IsDataVisible}">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -22,9 +41,10 @@
 
                             <StackLayout Spacing="0">
                                 <Label Text="{Binding name}"
-                                       Margin="20,12,12,4"/>
+                                       Margin="12,12,12,4"/>
 
-                                <CarouselView ItemsSource="{Binding associated_films}" 
+                                <CarouselView x:Name="FilmCarouselView"
+                                              ItemsSource="{Binding associated_films}" 
                                               FlowDirection="RightToLeft"
                                               PeekAreaInsets="112"
                                               HeightRequest="200"
@@ -45,6 +65,8 @@
                                                 </Grid.ColumnDefinitions>
 
                                                 <ImageButton Source="{Binding poster_url, Converter={StaticResource UriToImageSourceConverter}}"
+                                                             Command="{Binding NavigateToFilmModalCommand, Source={x:Reference Name=FilmCarouselView}}"
+                                                             CommandParameter="{Binding *}"
                                                              Aspect="AspectFill"
                                                              BorderColor="{StaticResource Key=LightPurple}"
                                                              BorderWidth="2"
