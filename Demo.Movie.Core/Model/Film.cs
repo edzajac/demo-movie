@@ -1,4 +1,6 @@
 ﻿
+using Newtonsoft.Json;
+
 namespace Demo.Movie.Core.Model
 {
     public class Film
@@ -13,6 +15,9 @@ namespace Demo.Movie.Core.Model
         public decimal popularity { get; set; }
         public int vote_count { get; set; }
         public decimal vote_average { get; set; }
+
+        [JsonIgnore]
+        public string poster_url { get; set; }
 
     }
 }

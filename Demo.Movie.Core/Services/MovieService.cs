@@ -8,6 +8,11 @@ namespace Demo.Movie.Core.Services
 {
     public class MovieService : BaseHttpClient, IMovieService
     {
+        public Task<ImageConfigurationResponse> GetImageConfiguration()
+        {
+            return GetAsync<ImageConfigurationResponse>($"configuration?api_key={AppConfig.Authentication.ApiKey}");
+        }
+
         public Task<GenreResponse> GetAvailableGenres()
         {
             return GetAsync<GenreResponse>($"genre/movie/list?api_key={AppConfig.Authentication.ApiKey}&language=en-US");

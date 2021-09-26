@@ -56,12 +56,24 @@ namespace Demo.Movie.Core.ViewModels
         {
             IsLoading = true;
 
+            ImageConfigurationResponse configResponse = await _movieService.GetImageConfiguration();
+
             GenreResponse genreResponse = await _movieService.GetAvailableGenres();
 
             PopularFilmsResponse filmResponse = await _movieService.GetMostRecentPopularFilms();
 
             _genres = genreResponse.genres.ToList();
+
             _popularFilms = filmResponse.results.ToList();
+
+            List<string> posterSizes = configResponse.images.poster_sizes.ToList();
+
+            string posterSize = posterSizes.Any() && posterSizes.Count >= 2 ? posterSizes[1] : "w154";
+
+            _popularFilms.ForEach(film =>
+            {
+                film.poster_url = $"{configResponse.images.base_url}{posterSize}{film.poster_path}";
+            });
 
             List<Genre> filmsByGenre = new List<Genre>
             {
@@ -78,6 +90,7 @@ namespace Demo.Movie.Core.ViewModels
             {
                 List<Film> films = _popularFilms.Select(film => film)
                                                 .Where(film => film.genre_ids.Contains(genre.id))
+                                                .Distinct()
                                                 .OrderBy(film => film.title)
                                                 .ToList();
                 genre.associated_films = films;
@@ -85,7 +98,7 @@ namespace Demo.Movie.Core.ViewModels
                 return genre;
 
             })
-            .Where(genre => genre.associated_films.Any())
+            .Where(genre => genre.associated_films.Any() && genre.associated_films.Count >= 3)
             .ToList();
 
             filmsByGenre.AddRange(filmsByGenreQuery);
