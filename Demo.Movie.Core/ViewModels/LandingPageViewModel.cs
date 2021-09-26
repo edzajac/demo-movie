@@ -41,7 +41,7 @@ namespace Demo.Movie.Core.ViewModels
             GetFilmsCommand = new Command(execute: async () => await GetFilms(),
                                           canExecute: () =>
                                           {
-                                              return !_isClicked && !_isRefreshing;
+                                              return !_isLoading;
                                           });
 ;        }
 
@@ -54,7 +54,7 @@ namespace Demo.Movie.Core.ViewModels
 
         private async Task GetFilms()
         {
-            _isClicked = true;
+            IsLoading = true;
 
             GenreResponse genreResponse = await _movieService.GetAvailableGenres();
 
@@ -92,7 +92,7 @@ namespace Demo.Movie.Core.ViewModels
 
             FilmsByGenre = filmsByGenre;
 
-            _isClicked = false;
+            IsLoading = false;
         }
     }
 }

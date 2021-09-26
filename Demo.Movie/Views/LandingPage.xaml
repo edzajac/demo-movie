@@ -3,28 +3,47 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:mvvm="clr-namespace:Demo.Movie.Views.MVVM"
                xmlns:vm="clr-namespace:Demo.Movie.Core.ViewModels;assembly=Demo.Movie.Core"
-               xmlns:controls="clr-namespace:Demo.Movie.Controls"
                x:Class="Demo.Movie.Views.LandingPage"
                x:TypeArguments="vm:LandingPageViewModel">
     <ContentPage.Content>
         <StackLayout>
-            <ScrollView>
+            <ListView x:Name="GenreListView"
+                      ItemsSource="{Binding FilmsByGenre}"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding GetFilmsCommand}"
+                      IsRefreshing="{Binding IsLoading}"
+                      SeparatorVisibility="None"
+                      ItemSelected="GenreListView_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
 
-                <controls:GenreCarouselGridView x:Name="GenreGrid"
-                                                ItemsSource="{Binding FilmsByGenre}"
-                                                WidthDefinition="*"
-                                                HeightDefinition="*"
-                                                RowSpacing="12">
-                    <controls:GenreCarouselGridView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout>
+                            <StackLayout >
                                 <Label Text="{Binding name}"
-                                       HorizontalOptions="Start"/>
+                                       HorizontalOptions="Start"
+                                       Margin="12,8,12,0"/>
 
                                 <CarouselView ItemsSource="{Binding associated_films}">
+                                    <CarouselView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Horizontal"
+                                                           ItemSpacing="12" />
+                                    </CarouselView.ItemsLayout>
                                     <CarouselView.ItemTemplate>
                                         <DataTemplate>
                                             <Frame BorderColor="{StaticResource Key=LightPurple}"
+                                                   HeightRequest="80"
+                                                   WidthRequest="60"
+                                                   CornerRadius="10"
+                                                   Padding="0">
+                                                <Button BackgroundColor="White"
+                                                        HeightRequest="80"
+                                                        WidthRequest="60"/>
+                                            </Frame>
+                                            <!--<ImageButton Source="{Binding poster_path}"
+                                                             Margin="0"
+                                                             HeightRequest="80"
+                                                             WidthRequest="60"/>-->
+                                            <!--<Frame BorderColor="{StaticResource Key=LightPurple}"
                                                    HeightRequest="80"
                                                    WidthRequest="60"
                                                    CornerRadius="10"
@@ -33,17 +52,18 @@
                                                              Margin="0"
                                                              HeightRequest="80"
                                                              WidthRequest="60"/>
-                                            </Frame>
+                                            </Frame>-->
                                         </DataTemplate>
                                     </CarouselView.ItemTemplate>
                                 </CarouselView>
 
                             </StackLayout>
-                        </DataTemplate>
-                    </controls:GenreCarouselGridView.ItemTemplate>
-                </controls:GenreCarouselGridView>
 
-            </ScrollView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </mvvm:BaseView>
