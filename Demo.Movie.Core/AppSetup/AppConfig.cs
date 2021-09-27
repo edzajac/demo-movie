@@ -3,6 +3,8 @@ namespace Demo.Movie.Core.AppSetup
 {
     public static class AppConfig
     {
+        public static readonly string AppName = "Movie Demo";
+
         public static class Url
         {
             public static readonly string BaseAddress = "https://api.themoviedb.org/";

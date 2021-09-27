@@ -5,6 +5,24 @@
                xmlns:vm="clr-namespace:Demo.Movie.Core.ViewModels;assembly=Demo.Movie.Core"
                x:Class="Demo.Movie.Views.LandingPage"
                x:TypeArguments="vm:LandingPageViewModel">
+    <NavigationPage.TitleView>
+        <StackLayout HorizontalOptions="CenterAndExpand"
+                     VerticalOptions="End">
+            <Label HorizontalOptions="Center"
+                   VerticalOptions="End">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="MOVIE "
+                              TextColor="{StaticResource Key=LightPurple}"
+                              Style="{StaticResource Key=LabelNavBarHeaderStyle}"/>
+                        <Span Text="TIME" 
+                              TextColor="{StaticResource Key=DarkPurple}"
+                              Style="{StaticResource Key=LabelNavBarHeaderStyle}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+    </NavigationPage.TitleView>
     <ContentPage.Content>
         <StackLayout>
             <ListView x:Name="GenreListView"
@@ -13,46 +31,52 @@
                       RefreshCommand="{Binding GetFilmsCommand}"
                       IsRefreshing="{Binding IsLoading}"
                       SeparatorVisibility="None"
-                      ItemSelected="GenreListView_ItemSelected">
+                      ItemSelected="GenreListView_ItemSelected"
+                      HasUnevenRows="True"
+                      IsVisible="{Binding IsDataVisible}">
+
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
 
-                            <StackLayout >
+                            <StackLayout Spacing="0">
                                 <Label Text="{Binding name}"
-                                       HorizontalOptions="Start"
-                                       Margin="12,8,12,0"/>
+                                       Margin="12,12,12,4"/>
 
-                                <CarouselView ItemsSource="{Binding associated_films}">
+                                <CarouselView x:Name="FilmCarouselView"
+                                              ItemsSource="{Binding associated_films}" 
+                                              FlowDirection="RightToLeft"
+                                              PeekAreaInsets="112"
+                                              HeightRequest="200"
+                                              Margin="0">
                                     <CarouselView.ItemsLayout>
                                         <LinearItemsLayout Orientation="Horizontal"
-                                                           ItemSpacing="12" />
+                                                           ItemSpacing="16"/>
                                     </CarouselView.ItemsLayout>
                                     <CarouselView.ItemTemplate>
                                         <DataTemplate>
-                                            <Frame BorderColor="{StaticResource Key=LightPurple}"
-                                                   HeightRequest="80"
-                                                   WidthRequest="60"
-                                                   CornerRadius="10"
-                                                   Padding="0">
-                                                <Button BackgroundColor="White"
-                                                        HeightRequest="80"
-                                                        WidthRequest="60"/>
-                                            </Frame>
-                                            <!--<ImageButton Source="{Binding poster_path}"
+                                            
+                                            <Grid WidthRequest="80">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <ImageButton Source="{Binding poster_url, Converter={StaticResource UriToImageSourceConverter}}"
+                                                             Command="{Binding Path=BindingContext.NavigateToFilmModalCommand, Source={x:Reference Name=GenreListView}}"
+                                                             CommandParameter="{Binding id}"
+                                                             Aspect="AspectFill"
+                                                             BorderColor="{StaticResource Key=LightPurple}"
+                                                             BorderWidth="2"
+                                                             CornerRadius="4"
                                                              Margin="0"
-                                                             HeightRequest="80"
-                                                             WidthRequest="60"/>-->
-                                            <!--<Frame BorderColor="{StaticResource Key=LightPurple}"
-                                                   HeightRequest="80"
-                                                   WidthRequest="60"
-                                                   CornerRadius="10"
-                                                   Padding="0">
-                                                <ImageButton Source="{Binding poster_path}"
-                                                             Margin="0"
-                                                             HeightRequest="80"
-                                                             WidthRequest="60"/>
-                                            </Frame>-->
+                                                             Grid.Row="0"
+                                                             Grid.Column="2"
+                                                             Grid.RowSpan="12"
+                                                             Grid.ColumnSpan="14"/>
+                                            </Grid>
                                         </DataTemplate>
                                     </CarouselView.ItemTemplate>
                                 </CarouselView>
@@ -62,6 +86,13 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                <ListView.FooterTemplate>
+                    <DataTemplate>
+                        <BoxView BackgroundColor="Transparent"
+                                 HeightRequest="60"/>
+                    </DataTemplate>
+                </ListView.FooterTemplate>
+                
 
             </ListView>
         </StackLayout>

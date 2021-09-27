@@ -1,16 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pageControls="clr-namespace:Demo.Movie.Controls.Pages"
+             xmlns:converters="clr-namespace:Demo.Movie.Converters"
              x:Class="Demo.Movie.App">
     <Application.Resources>
         <ResourceDictionary>
+
             <!-- Colors: <ColorName> i.e. LightGreen -->
             
             <Color x:Key="LightPurple">#8D4FE8</Color>
             <Color x:Key="DarkPurple">#6715C4</Color>
             <Color x:Key="DarkHeader">#1A1A1A</Color>
 
+            <!-- Styles: <ObjectType><Description>Style i.e. LabelSectionHeaderStyle -->
+
+
+            <Style x:Key="LabelNavBarHeaderStyle" TargetType="Label">
+                <!-- TODO: Check with designer the font for this object -->
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Italic" />
+            </Style>
             
             <!-- Xamarin Object Override Styles: -->
 
@@ -19,10 +28,14 @@
             </Style>
 
             <Style TargetType="Label">
-                <Setter Property="FontSize" Value="8" />
+                <Setter Property="FontSize" Value="10" />
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="FontFamily" Value="Helvetica"/>
             </Style>
+
+            <!-- Converters: -->
+
+            <converters:UriToImageSourceConverter x:Key="UriToImageSourceConverter"/>
 
         </ResourceDictionary>
     </Application.Resources>
