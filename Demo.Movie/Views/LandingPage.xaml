@@ -65,8 +65,8 @@
                                                 </Grid.ColumnDefinitions>
 
                                                 <ImageButton Source="{Binding poster_url, Converter={StaticResource UriToImageSourceConverter}}"
-                                                             Command="{Binding NavigateToFilmModalCommand, Source={x:Reference Name=FilmCarouselView}}"
-                                                             CommandParameter="{Binding *}"
+                                                             Command="{Binding Path=BindingContext.NavigateToFilmModalCommand, Source={x:Reference Name=GenreListView}}"
+                                                             CommandParameter="{Binding id}"
                                                              Aspect="AspectFill"
                                                              BorderColor="{StaticResource Key=LightPurple}"
                                                              BorderWidth="2"

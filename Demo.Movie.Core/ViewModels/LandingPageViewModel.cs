@@ -55,7 +55,7 @@ namespace Demo.Movie.Core.ViewModels
                                               return !_isClicked && !_isLoading;
                                           });
 
-            NavigateToFilmModalCommand = new Command(execute: film => NavigateToFilmModal((Film)film),
+            NavigateToFilmModalCommand = new Command(execute: film => NavigateToFilmModal((int)film),
                                                      canExecute: film =>
                                                      {
                                                          return !_isClicked && !_isLoading;
@@ -75,11 +75,15 @@ namespace Demo.Movie.Core.ViewModels
         /// Triggers the NavigateToFilmModalAction with the film param
         /// </summary>
         /// <param name="film"></param>
-        private void NavigateToFilmModal(Film film)
+        private void NavigateToFilmModal(int filmId)
         {
             _isClicked = true;
 
-            NavigateToFilmModalAction?.Invoke(film);
+            Film chosenFilm = _popularFilms.Select(film => film)
+                                           .Where(film => film.id == filmId)
+                                           .First();
+
+            NavigateToFilmModalAction?.Invoke(chosenFilm);
 
             _isClicked = false;
         }
