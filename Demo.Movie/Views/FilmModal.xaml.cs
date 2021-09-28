@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using Demo.Movie.Core.Model;
-using Xamarin.Forms;
+﻿using Demo.Movie.Core.Model;
+using Demo.Movie.Core.ViewModels;
+using Demo.Movie.Views.MVVM;
 
 namespace Demo.Movie.Views
 {
-    public partial class FilmModal : ContentPage
+    public partial class FilmModal : BaseView<FilmModalViewModel>
     {
         public FilmModal(Film film)
         {
+            ViewModel.ChosenFilm = film;
+
             InitializeComponent();
         }
     }

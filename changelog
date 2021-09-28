@@ -11,9 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Base projects: Demo.Movie, Demo.Movie.Core, Demo.Movie.Android, and Demo.Movie.iOS
 - MVVM implementation: BaseView, BaseViewModel
 - DependencyInjection via AutoFac
-- LandingPage View and ViewModels
+- LandingPage View and ViewModel
 - IMovieService Interface and Service files
-
+- FilmModal View And ViewModel
 
 ## [Released]
 

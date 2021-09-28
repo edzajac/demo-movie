@@ -1,15 +1,93 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Demo.Movie.Views.FilmModal"
-             BackgroundColor="Transparent">
+<mvvm:BaseView xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:mvvm="clr-namespace:Demo.Movie.Views.MVVM"
+               xmlns:vm="clr-namespace:Demo.Movie.Core.ViewModels;assembly=Demo.Movie.Core"
+               xmlns:rv="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
+               x:Class="Demo.Movie.Views.FilmModal"
+               x:TypeArguments="vm:FilmModalViewModel"
+               BackgroundColor="Transparent">
     <ContentPage.Content>
-        <StackLayout HorizontalOptions="Fill"
-                     VerticalOptions="Fill"
-                     BackgroundColor="Gray"
-                     Opacity="0.7"
-                     Margin="8,12,8,8">
 
-        </StackLayout >
+        <Grid HorizontalOptions="Fill"
+              VerticalOptions="Fill">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackLayout BackgroundColor="Black"
+                         HorizontalOptions="Fill"
+                         VerticalOptions="Fill"
+                         Opacity="0.7"
+                         Grid.Row="0"
+                         Grid.Column="0"/>
+
+            <rv:MaterialFrame LightThemeBackgroundColor="Gray"
+                              MaterialTheme="AcrylicBlur"
+                              MaterialBlurStyle="Light"
+                              HorizontalOptions="Fill"
+                              VerticalOptions="Fill"
+                              CornerRadius="10"
+                              Margin="8,12,8,8"
+                              Padding="16,12"
+                              Grid.Row="0"
+                              Grid.Column="0">
+
+                <StackLayout Spacing="10">
+
+                    <Frame CornerRadius="10"
+                           IsClippedToBounds="True"
+                           HorizontalOptions="Center"
+                           HeightRequest="100"
+                           WidthRequest="40"
+                           Padding="0">
+                       <Image Source="{Binding ChosenFilm.poster_url, Converter={StaticResource UriToImageSourceConverter}}"
+                              Aspect="AspectFill"/>
+                    </Frame>
+
+                    <Label Text="{Binding ChosenFilm.title}"
+                                Style="{StaticResource Key=LabelHeaderStyle}"
+                                HorizontalOptions="StartAndExpand"/>
+
+                        <Label HorizontalOptions="Start"
+                                FontSize="13.5">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Released: "
+                                            TextColor="Gray"/>
+                                    <Span Text="{Binding ChosenFilm.release_date}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Label Text="{Binding ChosenFilm.overview}"
+                                HorizontalOptions="Start"
+                                HorizontalTextAlignment="Start"/>
+
+                        <Grid ColumnSpacing="24">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Text="Back"
+                                    BackgroundColor="Transparent"/>
+
+                            <Button Text="View Trailer"
+                                    Grid.Row="0"
+                                    Grid.Column="1"/>
+
+                        </Grid>
+
+                </StackLayout >
+            </rv:MaterialFrame>
+
+        </Grid>
+        
     </ContentPage.Content>
-</ContentPage>
+</mvvm:BaseView>

@@ -24,6 +24,8 @@ namespace Demo.Movie.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
+            Sharpnado.MaterialFrame.iOS.iOSMaterialFrameRenderer.Init();
+
             var initialize = new AppSetup.OnStart();
 
             LoadApplication(new App(initialize));

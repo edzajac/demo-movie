@@ -20,6 +20,12 @@
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="FontAttributes" Value="Italic" />
             </Style>
+
+            <Style x:Key="LabelHeaderStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+
             
             <!-- Xamarin Object Override Styles: -->
 
@@ -31,6 +37,16 @@
                 <Setter Property="FontSize" Value="10" />
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="FontFamily" Value="Helvetica"/>
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="BorderColor" Value="{StaticResource Key=LightPurple}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Key=LightPurple}"/>
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="13.5"/>
+                <Setter Property="BorderWidth" Value="2"/>
+                <Setter Property="CornerRadius" Value="10"/>
             </Style>
 
             <!-- Converters: -->

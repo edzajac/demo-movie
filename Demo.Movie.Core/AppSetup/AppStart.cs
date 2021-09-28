@@ -26,6 +26,7 @@ namespace Demo.Movie.Core.AppSetup
             // View Models
 
             builder.RegisterType<LandingPageViewModel>().UsingConstructor(typeof(IMovieService)).SingleInstance();
+            builder.RegisterType<FilmModalViewModel>().UsingConstructor(typeof(IMovieService)).SingleInstance();
         }
     }
 
