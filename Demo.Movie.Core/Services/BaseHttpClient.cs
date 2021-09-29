@@ -11,13 +11,28 @@ namespace Demo.Movie.Core.Services
     {
         private JsonSerializer _serializer = new JsonSerializer();
 
+        private readonly Uri _baseAddress;
+
+        protected readonly string ApiKey;
+
+        public BaseHttpClient()
+        {
+            string address = AppSettingsManager.Settings["BaseAddress"];
+            string version = AppSettingsManager.Settings["Version"];
+            string apiKey = AppSettingsManager.Settings["ApiKey"];
+
+            _baseAddress = new Uri($"{address}{version}");
+
+            ApiKey = apiKey;
+        }
+
         protected async Task<T> GetAsync<T>(string uri)
         {
             try
             {
                 var client = new HttpClient();
 
-                client.BaseAddress = new Uri($"{AppConfig.Url.BaseAddress}{AppConfig.Url.Version}");
+                client.BaseAddress = _baseAddress;
 
                 client.Timeout = TimeSpan.FromMilliseconds(350000);
 

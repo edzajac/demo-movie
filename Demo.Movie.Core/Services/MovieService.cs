@@ -1,6 +1,5 @@
 ﻿
 using System.Threading.Tasks;
-using Demo.Movie.Core.AppSetup;
 using Demo.Movie.Core.Interfaces;
 using Demo.Movie.Core.Model;
 
@@ -10,22 +9,22 @@ namespace Demo.Movie.Core.Services
     {
         public Task<ImageConfigurationResponse> GetImageConfiguration()
         {
-            return GetAsync<ImageConfigurationResponse>($"configuration?api_key={AppConfig.Authentication.ApiKey}");
+            return GetAsync<ImageConfigurationResponse>($"configuration?api_key={ApiKey}");
         }
 
         public Task<GenreResponse> GetAvailableGenres()
         {
-            return GetAsync<GenreResponse>($"genre/movie/list?api_key={AppConfig.Authentication.ApiKey}&language=en-US");
+            return GetAsync<GenreResponse>($"genre/movie/list?api_key={ApiKey}&language=en-US");
         }
 
         public Task<PopularFilmsResponse> GetMostRecentPopularFilms()
         {
-            return GetAsync<PopularFilmsResponse>($"discover/movie?api_key={AppConfig.Authentication.ApiKey}&sort_by=popularity.desc");
+            return GetAsync<PopularFilmsResponse>($"discover/movie?api_key={ApiKey}&sort_by=popularity.desc");
         }
 
         public Task<FilmTrailerResponse> GetTrailerInformationByFilmId(int id)
         {
-            return GetAsync<FilmTrailerResponse>($"movie/{id}/videos?api_key={AppConfig.Authentication.ApiKey}&language=en-US");
+            return GetAsync<FilmTrailerResponse>($"movie/{id}/videos?api_key={ApiKey}&language=en-US");
         }
 
     }
