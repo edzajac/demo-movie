@@ -3,11 +3,12 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Demo.Movie.Core.AppSetup;
+using Demo.Movie.Core.Helpers;
 using Newtonsoft.Json;
 
 namespace Demo.Movie.Core.Services
 {
-    public class BaseHttpClient
+    public abstract class BaseHttpClient
     {
         private JsonSerializer _serializer = new JsonSerializer();
 
@@ -15,6 +16,11 @@ namespace Demo.Movie.Core.Services
 
         protected readonly string ApiKey;
 
+        protected abstract string ServiceName { get; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public BaseHttpClient()
         {
             string address = AppSettingsManager.Settings["BaseAddress"];
@@ -26,6 +32,12 @@ namespace Demo.Movie.Core.Services
             ApiKey = apiKey;
         }
 
+        /// <summary>
+        /// GetAsync method 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="uri"></param>
+        /// <returns></returns>
         protected async Task<T> GetAsync<T>(string uri)
         {
             try
@@ -49,8 +61,9 @@ namespace Demo.Movie.Core.Services
             }
             catch(Exception ex)
             {
-                //TODO
-                var tst = ex;
+                AppCenterLogger.TrackError(obj: this.ServiceName,
+                                           action: $"GetAsync<{typeof(T)}>({uri})",
+                                           exception: ex);
             }
 
             return default(T);

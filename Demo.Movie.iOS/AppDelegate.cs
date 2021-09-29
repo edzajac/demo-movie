@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿using Demo.Movie.Core.AppSetup;
 using Foundation;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using UIKit;
 
 namespace Demo.Movie.iOS
@@ -22,6 +22,12 @@ namespace Demo.Movie.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            string appCenterSecret = AppSettingsManager.Settings["iOSAppCenterSecret"];
+
+            AppCenter.Start(appCenterSecret, typeof(Analytics), typeof(Crashes));
+
+            Crashes.NotifyUserConfirmation(UserConfirmation.AlwaysSend);
+
             global::Xamarin.Forms.Forms.Init();
 
             Sharpnado.MaterialFrame.iOS.iOSMaterialFrameRenderer.Init();

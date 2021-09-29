@@ -1,9 +1,12 @@
-﻿using System;
-
+﻿
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
 using Android.OS;
+using Android.Runtime;
+using Demo.Movie.Core.AppSetup;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace Demo.Movie.Droid
 {
@@ -13,6 +16,12 @@ namespace Demo.Movie.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            string appCenterSecret = AppSettingsManager.Settings["AndroidAppCenterSecret"];
+
+            AppCenter.Start(appCenterSecret, typeof(Analytics), typeof(Crashes));
+
+            Crashes.NotifyUserConfirmation(UserConfirmation.AlwaysSend);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
