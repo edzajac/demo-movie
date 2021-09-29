@@ -11,7 +11,7 @@ namespace Demo.Movie.Core.Services
 
         public Task<ImageConfigurationResponse> GetImageConfiguration()
         {
-            return GetAsync<ImageConfigurationResponse>($"configuration?api_key={ApiKey}"));
+            return GetAsync<ImageConfigurationResponse>($"configuration?api_key={ApiKey}");
         }
 
         public Task<GenreResponse> GetAvailableGenres()

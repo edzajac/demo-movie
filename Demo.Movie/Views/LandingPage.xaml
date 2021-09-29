@@ -3,6 +3,7 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:mvvm="clr-namespace:Demo.Movie.Views.MVVM"
                xmlns:vm="clr-namespace:Demo.Movie.Core.ViewModels;assembly=Demo.Movie.Core"
+               xmlns:sharpnado="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
                x:Class="Demo.Movie.Views.LandingPage"
                x:TypeArguments="vm:LandingPageViewModel">
     <NavigationPage.TitleView>
@@ -29,11 +30,11 @@
                       ItemsSource="{Binding FilmsByGenre}"
                       IsPullToRefreshEnabled="True"
                       RefreshCommand="{Binding GetFilmsCommand}"
-                      IsRefreshing="{Binding IsLoading}"
+                      IsRefreshing="{Binding IsRefreshing}"
                       SeparatorVisibility="None"
                       ItemSelected="GenreListView_ItemSelected"
                       HasUnevenRows="True"
-                      IsVisible="{Binding IsDataVisible}">
+                      IsVisible="{Binding IsLoading, Converter={StaticResource InvertBoolConverter}}">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -95,6 +96,21 @@
                 
 
             </ListView>
+
+            <sharpnado:MaterialFrame LightThemeBackgroundColor="Gray"
+                                     MaterialTheme="AcrylicBlur"
+                                     MaterialBlurStyle="Light"
+                                     HorizontalOptions="Fill"
+                                     VerticalOptions="Fill"
+                                     IsVisible="{Binding IsLoading}">
+                                     
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                   IsVisible="{Binding IsLoading}"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand"/>
+
+            </sharpnado:MaterialFrame>
+
         </StackLayout>
     </ContentPage.Content>
 </mvvm:BaseView>

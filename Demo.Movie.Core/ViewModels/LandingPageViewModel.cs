@@ -27,6 +27,8 @@ namespace Demo.Movie.Core.ViewModels
             set => RaiseAndUpdate(ref _filmsByGenre, value);
         }
 
+        protected override string CurrentPage => "Landing Page";
+
         // Actions
 
         public Action<Film> NavigateToFilmModalAction { get; set; } 
@@ -49,22 +51,33 @@ namespace Demo.Movie.Core.ViewModels
             _popularFilms = new List<Film>();
 
 
-            GetFilmsCommand = new Command(execute: async () => await GetFilms(),
+            GetFilmsCommand = new Command(execute: async () =>
+                                          {
+                                              IsRefreshing = true;
+
+                                              await GetFilms();
+
+                                              IsRefreshing = false;
+                                          },
                                           canExecute: () =>
                                           {
-                                              return !_isClicked && !_isLoading;
+                                              return !_isClicked && !_isRefreshing;
                                           });
 
             NavigateToFilmModalCommand = new Command(execute: film => NavigateToFilmModal((int)film),
                                                      canExecute: film =>
                                                      {
-                                                         return !_isClicked && !_isLoading;
+                                                         return !_isClicked && !_isLoading && !_isRefreshing;
                                                      });
         }
 
         public override async Task InitAsync()
         {
+            IsLoading = true;
+
             GetFilmsCommand.Execute();
+
+            IsLoading = false;
 
             await base.InitAsync();
         }
@@ -83,6 +96,13 @@ namespace Demo.Movie.Core.ViewModels
                                            .Where(film => film.id == filmId)
                                            .First();
 
+            AppCenterLogger.TrackEvent(this.CurrentPage,
+                                       nameof(NavigateToFilmModal),
+                                       new Dictionary<string, string>()
+                                       {
+                                           { "film_title", chosenFilm.title }
+                                       });
+
             NavigateToFilmModalAction?.Invoke(chosenFilm);
 
             _isClicked = false;
@@ -94,20 +114,12 @@ namespace Demo.Movie.Core.ViewModels
         /// <returns></returns>
         private async Task GetFilms()
         {
-            IsLoading = true;
-
             bool isDataAvailable = await GetFilmAndGenreData();
 
             IsDataAvailable = isDataAvailable;
 
-            //TODO: Check with designer about offline state
-            // with no data stored.
-
             if (isDataAvailable)
             {
-                // TODO: Check with PO and designer about lists containing 
-                // two or more films
-
                 List<string> posterSizes = _currentConfig.poster_sizes.ToList();
 
                 string posterSize = posterSizes.Any() && posterSizes.Count >= 2 ? posterSizes[1] : "w154";
@@ -147,8 +159,6 @@ namespace Demo.Movie.Core.ViewModels
 
                 FilmsByGenre = filmsByGenre;
             }
-
-            IsLoading = false;
         }
 
         #endregion

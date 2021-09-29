@@ -19,6 +19,8 @@ namespace Demo.Movie.Core.ViewModels
             set => RaiseAndUpdate(ref _chosenFilm, value);
         }
 
+        protected override string CurrentPage => "Film Modal";
+
         // Commands
 
         public Command ViewTrailerCommand { get; set; }
