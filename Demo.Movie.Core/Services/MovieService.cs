@@ -23,5 +23,10 @@ namespace Demo.Movie.Core.Services
             return GetAsync<PopularFilmsResponse>($"discover/movie?api_key={AppConfig.Authentication.ApiKey}&sort_by=popularity.desc");
         }
 
+        public Task<FilmTrailerResponse> GetTrailerInformationByFilmId(int id)
+        {
+            return GetAsync<FilmTrailerResponse>($"movie/{id}/videos?api_key={AppConfig.Authentication.ApiKey}&language=en-US");
+        }
+
     }
 }

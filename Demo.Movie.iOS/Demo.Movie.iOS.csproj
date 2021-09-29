@@ -147,5 +147,9 @@
     <Folder Include="AppSetup\" />
     <Folder Include="Controls\" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Roboto-Medium.ttf" />
+    <BundleResource Include="Resources\Roboto-Regular.ttf" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

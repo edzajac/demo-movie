@@ -9,5 +9,6 @@ namespace Demo.Movie.Core.Interfaces
         Task<ImageConfigurationResponse> GetImageConfiguration();
         Task<GenreResponse> GetAvailableGenres();
         Task<PopularFilmsResponse> GetMostRecentPopularFilms();
+        Task<FilmTrailerResponse> GetTrailerInformationByFilmId(int id);
     }
 }

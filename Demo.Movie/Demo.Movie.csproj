@@ -27,10 +27,14 @@
     <None Remove="Xamarin.FFImageLoading" />
     <None Remove="Xamarin.FFImageLoading.Transformations" />
     <None Remove="Sharpnado.MaterialFrame" />
+    <None Remove="Behaviors\" />
+    <None Remove="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
     <Folder Include="Views\MVVM\" />
     <Folder Include="Converters\" />
+    <Folder Include="Behaviors\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 </Project>
