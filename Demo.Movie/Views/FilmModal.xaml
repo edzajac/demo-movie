@@ -10,32 +10,24 @@
                BackgroundColor="Transparent">
     <ContentPage.Content>
 
-        <Grid HorizontalOptions="Fill"
-              VerticalOptions="Fill"
-              Margin="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
 
-            <StackLayout BackgroundColor="Black"
-                         HorizontalOptions="Fill"
-                         VerticalOptions="Fill"
-                         Opacity="0.5"
-                         Grid.Row="0"
-                         Grid.Column="0"/>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                         AbsoluteLayout.LayoutFlags="All"
+                         BackgroundColor="BLACK"
+                         Opacity="0.5"/>
 
-            <sharpnado:MaterialFrame MaterialTheme="AcrylicBlur"
+            <sharpnado:MaterialFrame AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                                     AbsoluteLayout.LayoutFlags="All"  
+                                     MaterialTheme="AcrylicBlur"
                                      MaterialBlurStyle="Light"
                                      HorizontalOptions="Fill"
                                      VerticalOptions="Fill"
                                      CornerRadius="10"
                                      Margin="12,20,12,12"
-                                     Padding="16,12"
-                                     Grid.Row="0"
-                                     Grid.Column="0">
+                                     Padding="16,12">
+
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -45,8 +37,8 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+
                     <Image Source="{Binding ChosenFilm.poster_url, Converter={StaticResource UriToImageSourceConverter}}"
-                           x:Name="FilmPosterImage"
                            VerticalOptions="FillAndExpand"
                            Aspect="AspectFit"
                            Grid.Row="0"
@@ -111,7 +103,20 @@
 
             </sharpnado:MaterialFrame>
 
-        </Grid>
+            <Button ImageSource="CloseIcon"
+                    Command="{Binding PopFilmModalCommand}"
+                    AbsoluteLayout.LayoutBounds="0.98,0.02,-1,-1" 
+                    AbsoluteLayout.LayoutFlags="PositionProportional"  
+                    HeightRequest="24"
+                    WidthRequest="24">
+                <Button.Clip>
+                    <EllipseGeometry Center="12,12"
+                                     RadiusX="12"
+                                     RadiusY="12"/>
+                </Button.Clip>
+            </Button>
+
+        </AbsoluteLayout>
         
     </ContentPage.Content>
 </mvvm:BaseView>
