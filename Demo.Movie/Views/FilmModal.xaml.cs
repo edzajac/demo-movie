@@ -4,7 +4,6 @@ using Demo.Movie.Core.ViewModels;
 using Demo.Movie.Views.MVVM;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
-using Xamarin.Forms.Shapes;
 
 namespace Demo.Movie.Views
 {

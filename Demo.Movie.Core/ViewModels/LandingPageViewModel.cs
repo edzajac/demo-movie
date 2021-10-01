@@ -8,7 +8,6 @@ using Demo.Movie.Core.Helpers;
 using Demo.Movie.Core.Interfaces;
 using Demo.Movie.Core.Model;
 using Demo.Movie.Core.ViewModels.MVVM;
-using Xamarin.Essentials;
 
 namespace Demo.Movie.Core.ViewModels
 {

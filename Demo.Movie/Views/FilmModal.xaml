@@ -38,12 +38,14 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
+
                     <Image Source="{Binding ChosenFilm.poster_url, Converter={StaticResource UriToImageSourceConverter}}"
                            VerticalOptions="FillAndExpand"
                            Aspect="AspectFit"
                            Grid.Row="0"
                            Grid.RowSpan="2"
                            Grid.Column="0"/>
+
 
                     <StackLayout Spacing="16"
                                  Grid.Row="2"

@@ -11,6 +11,10 @@ namespace Demo.Movie.Tests.ViewModelTests
     {
         private readonly LandingPageViewModel _landingPageVM;
 
+        /// <summary>
+        /// Here is a quick example of Mocked Unit Tests
+        /// leveraging the View Models of the Demo.Movie app
+        /// </summary>
         public LandingPageViewModelTest() : base()
         {
             _landingPageVM = new LandingPageViewModel(MovieService);
