@@ -4,7 +4,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Akavache;
-using Demo.Movie.Core.AppSetup;
 
 namespace Demo.Movie.Core.Helpers
 {
@@ -19,7 +18,7 @@ namespace Demo.Movie.Core.Helpers
 
         public static void InitCache()
         {
-            Registrations.Start(AppConfig.AppName);
+            Registrations.Start(Xamarin.Essentials.AppInfo.Name);
         }
 
         public static void EnsureCaches()

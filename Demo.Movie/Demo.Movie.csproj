@@ -14,6 +14,11 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2125" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
     <PackageReference Include="Autofac" Version="6.2.0" />
+    <PackageReference Include="Sharpnado.MaterialFrame" Version="1.2.0" />
+    <PackageReference Include="Microsoft.AppCenter" Version="4.4.0" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.4.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.4.0" />
+    <PackageReference Include="Sharpnado.Forms.HorizontalListView" Version="1.8.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Demo.Movie.Core\Demo.Movie.Core.csproj" />
@@ -23,10 +28,30 @@
     <None Remove="Views\MVVM\" />
     <None Remove="Autofac" />
     <None Remove="Converters\" />
+    <None Remove="Xamarin.FFImageLoading" />
+    <None Remove="Xamarin.FFImageLoading.Transformations" />
+    <None Remove="Sharpnado.MaterialFrame" />
+    <None Remove="Behaviors\" />
+    <None Remove="Helpers\" />
+    <None Remove="Microsoft.AppCenter" />
+    <None Remove="Microsoft.AppCenter.Analytics" />
+    <None Remove="Microsoft.AppCenter.Crashes" />
+    <None Remove="Sharpnado.Presentation.Forms" />
+    <None Remove="Sharpnado.Forms.HorizontalListView" />
+    <None Remove="Xamarin.Plugin.SharedTransitions" />
+    <None Remove="Control\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
     <Folder Include="Views\MVVM\" />
     <Folder Include="Converters\" />
+    <Folder Include="Behaviors\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Control\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\FilmModal.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

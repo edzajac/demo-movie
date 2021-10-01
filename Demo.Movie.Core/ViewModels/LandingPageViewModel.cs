@@ -1,13 +1,13 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Demo.Movie.Core.Helpers;
 using Demo.Movie.Core.Interfaces;
 using Demo.Movie.Core.Model;
 using Demo.Movie.Core.ViewModels.MVVM;
-using Xamarin.Essentials;
 
 namespace Demo.Movie.Core.ViewModels
 {
@@ -19,13 +19,16 @@ namespace Demo.Movie.Core.ViewModels
 
         private List<Film> _popularFilms;
         private List<Genre> _genres;
-        private List<Genre> _filmsByGenre;
 
-        public List<Genre> FilmsByGenre
+        private ObservableCollection<Genre> _filmsByGenre;
+
+        public ObservableCollection<Genre> FilmsByGenre
         {
             get => _filmsByGenre;
             set => RaiseAndUpdate(ref _filmsByGenre, value);
         }
+
+        protected override string CurrentPage => "Landing Page";
 
         // Actions
 
@@ -45,26 +48,42 @@ namespace Demo.Movie.Core.ViewModels
             _movieService = movieService;
 
             _currentConfig = new ImageConfiguration();
+
             _genres = new List<Genre>();
             _popularFilms = new List<Film>();
 
+            _filmsByGenre = new ObservableCollection<Genre>();
 
-            GetFilmsCommand = new Command(execute: async () => await GetFilms(),
+
+            GetFilmsCommand = new Command(execute: async () =>
+                                          {
+                                              IsRefreshing = true;
+
+                                              List<Genre> filmsByGenre = await GetFilms();
+
+                                              FilmsByGenre = new ObservableCollection<Genre>(filmsByGenre);
+
+                                              IsRefreshing = false;
+                                          },
                                           canExecute: () =>
                                           {
-                                              return !_isClicked && !_isLoading;
+                                              return !_isClicked && !_isRefreshing;
                                           });
 
             NavigateToFilmModalCommand = new Command(execute: film => NavigateToFilmModal((int)film),
                                                      canExecute: film =>
                                                      {
-                                                         return !_isClicked && !_isLoading;
+                                                         return !_isClicked && !_isLoading && !_isRefreshing;
                                                      });
         }
 
         public override async Task InitAsync()
         {
+            IsLoading = true;
+
             GetFilmsCommand.Execute();
+
+            IsLoading = false;
 
             await base.InitAsync();
         }
@@ -83,6 +102,13 @@ namespace Demo.Movie.Core.ViewModels
                                            .Where(film => film.id == filmId)
                                            .First();
 
+            AppCenterLogger.TrackEvent(this.CurrentPage,
+                                       nameof(NavigateToFilmModal),
+                                       new Dictionary<string, string>()
+                                       {
+                                           { "film_title", chosenFilm.title }
+                                       });
+
             NavigateToFilmModalAction?.Invoke(chosenFilm);
 
             _isClicked = false;
@@ -92,22 +118,14 @@ namespace Demo.Movie.Core.ViewModels
         /// Displays the film and genre data received
         /// </summary>
         /// <returns></returns>
-        private async Task GetFilms()
+        public async Task<List<Genre>> GetFilms()
         {
-            IsLoading = true;
-
             bool isDataAvailable = await GetFilmAndGenreData();
 
             IsDataAvailable = isDataAvailable;
 
-            //TODO: Check with designer about offline state
-            // with no data stored.
-
             if (isDataAvailable)
             {
-                // TODO: Check with PO and designer about lists containing 
-                // two or more films
-
                 List<string> posterSizes = _currentConfig.poster_sizes.ToList();
 
                 string posterSize = posterSizes.Any() && posterSizes.Count >= 2 ? posterSizes[1] : "w154";
@@ -145,10 +163,10 @@ namespace Demo.Movie.Core.ViewModels
 
                 filmsByGenre.AddRange(filmsByGenreQuery);
 
-                FilmsByGenre = filmsByGenre;
+                return filmsByGenre;
             }
 
-            IsLoading = false;
+            return FilmsByGenre.Any() ? _filmsByGenre.ToList() : new List<Genre>();
         }
 
         #endregion
@@ -160,59 +178,45 @@ namespace Demo.Movie.Core.ViewModels
         /// will be used.
         /// </summary>
         /// <returns></returns>
-        private async Task<bool> GetFilmAndGenreData()
+        public async Task<bool> GetFilmAndGenreData()
         {
-            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            ImageConfigurationResponse configResponse = await _movieService.GetImageConfiguration();
+
+            GenreResponse genreResponse = await _movieService.GetAvailableGenres();
+
+            PopularFilmsResponse filmResponse = await _movieService.GetMostRecentPopularFilms();
+
+            if (configResponse != null)
             {
-                ImageConfigurationResponse configResponse = await _movieService.GetImageConfiguration();
-
-                GenreResponse genreResponse = await _movieService.GetAvailableGenres();
-
-                PopularFilmsResponse filmResponse = await _movieService.GetMostRecentPopularFilms();
-
-                if (configResponse != null)
-                {
-                    AkavacheCache.Set<ImageConfiguration>(AkavacheCache.Key.ImageConfig, configResponse.images);
-                    _currentConfig = configResponse.images;
-                }
-                else
-                {
-                    var imageConfig = await AkavacheCache.Get<ImageConfiguration>(AkavacheCache.Key.ImageConfig);
-                    _currentConfig = imageConfig;
-                }
-
-                if (genreResponse != null)
-                {
-                    AkavacheCache.Set<IEnumerable<Genre>>(AkavacheCache.Key.Genres, genreResponse.genres);
-                    _genres = genreResponse.genres.ToList();
-
-                }
-                else
-                {
-                    var genres = await AkavacheCache.Get<IEnumerable<Genre>>(AkavacheCache.Key.Genres);
-                    _genres = genres.ToList();
-                }
-
-                if (filmResponse != null)
-                {
-                    AkavacheCache.Set<IEnumerable<Film>>(AkavacheCache.Key.PopularFilms, filmResponse.results);
-                    _popularFilms = filmResponse.results.ToList();
-                }
-                else
-                {
-                    var films = await AkavacheCache.Get<IEnumerable<Film>>(AkavacheCache.Key.PopularFilms);
-                    _popularFilms = films.ToList();
-                }
-
+                AkavacheCache.Set<ImageConfiguration>(AkavacheCache.Key.ImageConfig, configResponse.images);
+                _currentConfig = configResponse.images;
             }
             else
             {
                 var imageConfig = await AkavacheCache.Get<ImageConfiguration>(AkavacheCache.Key.ImageConfig);
-                var genres = await AkavacheCache.Get<IEnumerable<Genre>>(AkavacheCache.Key.Genres);
-                var films = await AkavacheCache.Get<IEnumerable<Film>>(AkavacheCache.Key.PopularFilms);
-
                 _currentConfig = imageConfig;
+            }
+
+            if (genreResponse != null)
+            {
+                AkavacheCache.Set<IEnumerable<Genre>>(AkavacheCache.Key.Genres, genreResponse.genres);
+                _genres = genreResponse.genres.ToList();
+
+            }
+            else
+            {
+                var genres = await AkavacheCache.Get<IEnumerable<Genre>>(AkavacheCache.Key.Genres);
                 _genres = genres.ToList();
+            }
+
+            if (filmResponse != null)
+            {
+                AkavacheCache.Set<IEnumerable<Film>>(AkavacheCache.Key.PopularFilms, filmResponse.results);
+                _popularFilms = filmResponse.results.ToList();
+            }
+            else
+            {
+                var films = await AkavacheCache.Get<IEnumerable<Film>>(AkavacheCache.Key.PopularFilms);
                 _popularFilms = films.ToList();
             }
 

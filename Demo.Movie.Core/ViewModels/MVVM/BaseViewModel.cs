@@ -13,6 +13,7 @@ namespace Demo.Movie.Core.ViewModels.MVVM
                        _isClicked = false,
                        _isDataAvailable = true;
 
+        protected virtual string CurrentPage { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
