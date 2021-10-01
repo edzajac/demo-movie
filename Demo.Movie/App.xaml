@@ -12,6 +12,7 @@
             <Color x:Key="LightPurple">#974BF0</Color>
             <Color x:Key="DarkPurple">#7107CC</Color>
             <Color x:Key="DarkHeader">#1A1A1A</Color>
+            <Color x:Key="LightGray">#A5A5A5</Color>
             <Color x:Key="Yellow">#FFF500</Color>
 
             <!-- Fonts: -->
@@ -42,9 +43,11 @@
 
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource Key=DarkHeader}" />
-                <Setter Property="BackgroundColor" Value="Black"/>
             </Style>
 
+            <Style TargetType="ContentPage">
+                <Setter Property="BackgroundColor" Value="Black"/>
+            </Style>
             <Style TargetType="Label">
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="Font" Value="{StaticResource Key=RobotoMedium}"/>

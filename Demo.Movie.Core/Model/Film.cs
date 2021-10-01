@@ -1,4 +1,5 @@
 ﻿
+using System;
 using Newtonsoft.Json;
 
 namespace Demo.Movie.Core.Model
@@ -18,6 +19,16 @@ namespace Demo.Movie.Core.Model
 
         [JsonIgnore]
         public string poster_url { get; set; }
+
+        [JsonIgnore]
+        public string formatted_release_date 
+        {
+            get 
+            {
+                var datetime = Convert.ToDateTime(this.release_date);
+                return datetime.ToString("MM/dd/yyyy");
+            }
+        }
 
     }
 }

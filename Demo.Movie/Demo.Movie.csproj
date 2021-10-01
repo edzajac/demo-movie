@@ -18,6 +18,7 @@
     <PackageReference Include="Microsoft.AppCenter" Version="4.4.0" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.4.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.4.0" />
+    <PackageReference Include="Sharpnado.Forms.HorizontalListView" Version="1.8.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Demo.Movie.Core\Demo.Movie.Core.csproj" />
@@ -35,6 +36,10 @@
     <None Remove="Microsoft.AppCenter" />
     <None Remove="Microsoft.AppCenter.Analytics" />
     <None Remove="Microsoft.AppCenter.Crashes" />
+    <None Remove="Sharpnado.Presentation.Forms" />
+    <None Remove="Sharpnado.Forms.HorizontalListView" />
+    <None Remove="Xamarin.Plugin.SharedTransitions" />
+    <None Remove="Control\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -42,5 +47,6 @@
     <Folder Include="Converters\" />
     <Folder Include="Behaviors\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Control\" />
   </ItemGroup>
 </Project>

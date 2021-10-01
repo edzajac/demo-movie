@@ -13,6 +13,9 @@ namespace Demo.Movie
 
             InitializeComponent();
 
+            // Sharpnado Forms Initializers
+
+            Sharpnado.HorizontalListView.Initializer.Initialize(true, false);
             Sharpnado.MaterialFrame.Initializer.Initialize(false, false); 
 
             MainPage = new NavigationPage(new LandingPage());

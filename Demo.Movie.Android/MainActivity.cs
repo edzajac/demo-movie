@@ -23,6 +23,8 @@ namespace Demo.Movie.Droid
 
             Crashes.NotifyUserConfirmation(UserConfirmation.AlwaysSend);
 
+            Sharpnado.HorizontalListView.Droid.SharpnadoInitializer.Initialize();
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

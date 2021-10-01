@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Demo.Movie.Core.Helpers;
@@ -19,9 +20,9 @@ namespace Demo.Movie.Core.ViewModels
 
         private List<Film> _popularFilms;
         private List<Genre> _genres;
-        private List<Genre> _filmsByGenre;
+        private ObservableCollection<Genre> _filmsByGenre;
 
-        public List<Genre> FilmsByGenre
+        public ObservableCollection<Genre> FilmsByGenre
         {
             get => _filmsByGenre;
             set => RaiseAndUpdate(ref _filmsByGenre, value);
@@ -157,7 +158,7 @@ namespace Demo.Movie.Core.ViewModels
 
                 filmsByGenre.AddRange(filmsByGenreQuery);
 
-                FilmsByGenre = filmsByGenre;
+                FilmsByGenre = new ObservableCollection<Genre>(filmsByGenre);
             }
         }
 

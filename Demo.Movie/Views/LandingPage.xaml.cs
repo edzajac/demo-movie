@@ -37,7 +37,18 @@ namespace Demo.Movie.Views
         /// <param name="e"></param>
         public void GenreListView_ItemSelected(Object sender, SelectedItemChangedEventArgs e)
         {
-            GenreListView.SelectedItem = null;
+            if(Xamarin.Essentials.DeviceInfo.Platform == Xamarin.Essentials.DevicePlatform.Android)
+            {
+                GenreListView.SelectedItem = null;
+            }
+        }
+
+        public async Task OnReveal_FlipAnimation(ViewCell viewCell)
+        {
+
+            await viewCell.View.FadeTo(1);
+
+            await viewCell.View.RotateYTo(0);
         }
 
         /// <summary>
@@ -46,6 +57,8 @@ namespace Demo.Movie.Views
         /// <param name="film"></param>
         public async void NavigateToFilmModal(Film film)
         {
+            var tst = new FilmModal(film);
+
             await Navigation.PushModalAsync(new FilmModal(film));
         }
     }

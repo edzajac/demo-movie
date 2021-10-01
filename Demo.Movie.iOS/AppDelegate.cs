@@ -28,6 +28,8 @@ namespace Demo.Movie.iOS
 
             Crashes.NotifyUserConfirmation(UserConfirmation.AlwaysSend);
 
+            Sharpnado.HorizontalListView.iOS.SharpnadoInitializer.Initialize();
+
             global::Xamarin.Forms.Forms.Init();
 
             Sharpnado.MaterialFrame.iOS.iOSMaterialFrameRenderer.Init();

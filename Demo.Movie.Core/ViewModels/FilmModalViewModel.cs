@@ -21,13 +21,24 @@ namespace Demo.Movie.Core.ViewModels
 
         protected override string CurrentPage => "Film Modal";
 
+        // Actions
+
+        public Action PopFilmModalAction { get; set; }
+
         // Commands
 
+        public Command PopFilmModalCommand { get; set; }
         public Command ViewTrailerCommand { get; set; }
 
         public FilmModalViewModel(IMovieService movieService)
         {
             _movieService = movieService;
+
+            PopFilmModalCommand = new Command(execute: PopFilmModal,
+                                              canExecute: () =>
+                                              {
+                                                  return !_isClicked;
+                                              });
 
             ViewTrailerCommand = new Command(execute: async id => await ViewTrailerByFilmId((int)id),
                                              canExecute: id =>
@@ -36,6 +47,23 @@ namespace Demo.Movie.Core.ViewModels
                                              });
         }
 
+        /// <summary>
+        /// Triggers the PopFilmModal action to pop the current modal
+        /// </summary>
+        private void PopFilmModal()
+        {
+            _isClicked = true;
+
+            PopFilmModalAction?.Invoke();
+
+            _isClicked = false;
+        }
+
+        /// <summary>
+        /// TODO:
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private async Task ViewTrailerByFilmId(int id)
         {
             _isClicked = true;

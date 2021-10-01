@@ -1,7 +1,10 @@
-﻿using System;
+﻿
 using Demo.Movie.Core.Model;
 using Demo.Movie.Core.ViewModels;
 using Demo.Movie.Views.MVVM;
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
+using Xamarin.Forms.Shapes;
 
 namespace Demo.Movie.Views
 {
@@ -11,7 +14,23 @@ namespace Demo.Movie.Views
         {
             ViewModel.ChosenFilm = film;
 
+            On<iOS>().SetModalPresentationStyle(UIModalPresentationStyle.OverFullScreen);
+
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            ViewModel.PopFilmModalAction = PopFilmModal;
+        }
+
+        protected override void OnDisappearing()
+        {
+            ViewModel.PopFilmModalAction = null;
+
+            base.OnDisappearing();
         }
 
         /// <summary>
@@ -19,7 +38,7 @@ namespace Demo.Movie.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public async void BackButton_Clicked(Object sender, EventArgs e)
+        public async void PopFilmModal()
         {
             await Navigation.PopModalAsync();
         }
