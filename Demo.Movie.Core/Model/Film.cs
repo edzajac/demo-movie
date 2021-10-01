@@ -1,4 +1,7 @@
 ﻿
+using System;
+using Newtonsoft.Json;
+
 namespace Demo.Movie.Core.Model
 {
     public class Film
@@ -13,6 +16,19 @@ namespace Demo.Movie.Core.Model
         public decimal popularity { get; set; }
         public int vote_count { get; set; }
         public decimal vote_average { get; set; }
+
+        [JsonIgnore]
+        public string poster_url { get; set; }
+
+        [JsonIgnore]
+        public string formatted_release_date 
+        {
+            get 
+            {
+                var datetime = Convert.ToDateTime(this.release_date);
+                return datetime.ToString("MM/dd/yyyy");
+            }
+        }
 
     }
 }

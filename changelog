@@ -8,9 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.1] - Initial
 ## Added
-- Base projects: Demo.Movie, Demo.Movie.Core, Demo.Movie.Android, and Demo.Movie.iOS
-- MVVM implementation
-
+- Base projects: Demo.Movie, Demo.Movie.Core, Demo.Movie.Android, Demo.Movie.iOS, and Demo.Movie.Tests
+- MVVM implementation: BaseView, BaseViewModel
+- DependencyInjection via AutoFac
+- LandingPage View and ViewModel
+- IMovieService Interface and Service files
+- FilmModal View And ViewModel
+- Akavache for caching
+- AppSettingsManager for settings
 
 ## [Released]
 

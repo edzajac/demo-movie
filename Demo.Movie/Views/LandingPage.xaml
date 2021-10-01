@@ -3,67 +3,115 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:mvvm="clr-namespace:Demo.Movie.Views.MVVM"
                xmlns:vm="clr-namespace:Demo.Movie.Core.ViewModels;assembly=Demo.Movie.Core"
+               xmlns:sharpnado="clr-namespace:Sharpnado.HorizontalListView.RenderedViews;assembly=Sharpnado.HorizontalListView"
                x:Class="Demo.Movie.Views.LandingPage"
                x:TypeArguments="vm:LandingPageViewModel">
-    <ContentPage.Content>
-        <StackLayout>
-            <ListView x:Name="GenreListView"
-                      ItemsSource="{Binding FilmsByGenre}"
-                      IsPullToRefreshEnabled="True"
-                      RefreshCommand="{Binding GetFilmsCommand}"
-                      IsRefreshing="{Binding IsLoading}"
-                      SeparatorVisibility="None"
-                      ItemSelected="GenreListView_ItemSelected">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-
-                            <StackLayout >
-                                <Label Text="{Binding name}"
-                                       HorizontalOptions="Start"
-                                       Margin="12,8,12,0"/>
-
-                                <CarouselView ItemsSource="{Binding associated_films}">
-                                    <CarouselView.ItemsLayout>
-                                        <LinearItemsLayout Orientation="Horizontal"
-                                                           ItemSpacing="12" />
-                                    </CarouselView.ItemsLayout>
-                                    <CarouselView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Frame BorderColor="{StaticResource Key=LightPurple}"
-                                                   HeightRequest="80"
-                                                   WidthRequest="60"
-                                                   CornerRadius="10"
-                                                   Padding="0">
-                                                <Button BackgroundColor="White"
-                                                        HeightRequest="80"
-                                                        WidthRequest="60"/>
-                                            </Frame>
-                                            <!--<ImageButton Source="{Binding poster_path}"
-                                                             Margin="0"
-                                                             HeightRequest="80"
-                                                             WidthRequest="60"/>-->
-                                            <!--<Frame BorderColor="{StaticResource Key=LightPurple}"
-                                                   HeightRequest="80"
-                                                   WidthRequest="60"
-                                                   CornerRadius="10"
-                                                   Padding="0">
-                                                <ImageButton Source="{Binding poster_path}"
-                                                             Margin="0"
-                                                             HeightRequest="80"
-                                                             WidthRequest="60"/>
-                                            </Frame>-->
-                                        </DataTemplate>
-                                    </CarouselView.ItemTemplate>
-                                </CarouselView>
-
-                            </StackLayout>
-
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-
-            </ListView>
+    <NavigationPage.TitleView>
+        <StackLayout HorizontalOptions="CenterAndExpand"
+                     VerticalOptions="End">
+            <Label HorizontalOptions="Center"
+                   VerticalOptions="End">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="MOVIE "
+                              TextColor="{StaticResource Key=LightPurple}"
+                              Style="{StaticResource Key=LabelNavBarHeaderStyle}"/>
+                        <Span Text="TIME" 
+                              TextColor="{StaticResource Key=DarkPurple}"
+                              Style="{StaticResource Key=LabelNavBarHeaderStyle}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.VerticalOptions>
+                    <OnPlatform x:TypeArguments="LayoutOptions">
+                        <On Platform="iOS" Value="Center"/>
+                        <On Platform="Android" Value="End"/>
+                    </OnPlatform>
+                </Label.VerticalOptions>
+            </Label>
         </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                         AbsoluteLayout.LayoutFlags="All"
+                         Margin="0">
+
+                <Label Text="No films were found at this time. Please try again soon."
+                       IsVisible="{Binding IsDataAvailable, Converter={StaticResource InvertBoolConverter}}"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="Start"
+                       Margin="0,24,0,0"/>
+
+                <ListView x:Name="GenreListView"
+                          CachingStrategy="RecycleElement"
+                          IsVisible="{Binding IsLoading, Converter={StaticResource InvertBoolConverter}}"
+                          ItemsSource="{Binding FilmsByGenre}"
+                          RefreshCommand="{Binding GetFilmsCommand}"
+                          IsRefreshing="{Binding IsRefreshing}"
+                          IsPullToRefreshEnabled="True"
+                          ItemSelected="GenreListView_ItemSelected"
+                          SelectionMode="None"
+                          SeparatorVisibility="None"
+                          BackgroundColor="Transparent"
+                          HasUnevenRows="True"
+                          Margin="0">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+
+                                <StackLayout Margin="0,24,0,0"
+                                             Spacing="4">
+
+                                    <Label Text="{Binding name}"
+                                           Margin="16,0,0,0"/>
+
+                                    <sharpnado:HorizontalListView ItemsSource="{Binding associated_films}"
+                                                                  ListLayout="Linear"
+                                                                  SnapStyle="Start"
+                                                                  ItemSpacing="16"
+                                                                  ItemHeight="252"
+                                                                  ItemWidth="170">
+                                        <sharpnado:HorizontalListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <ViewCell>
+                                                    <StackLayout Margin="0">
+
+                                                        <ImageButton Source="{Binding poster_url, Converter={StaticResource UriToImageSourceConverter}}"
+                                                                     Command="{Binding Path=BindingContext.NavigateToFilmModalCommand, Source={x:Reference Name=GenreListView}}"
+                                                                     CommandParameter="{Binding id}"
+                                                                     Aspect="AspectFill"
+                                                                     HeightRequest="252"
+                                                                     WidthRequest="170"
+                                                                     BorderColor="{StaticResource Key=LightPurple}"
+                                                                     BorderWidth="2"
+                                                                     CornerRadius="16"
+                                                                     Margin="0"/>
+
+                                                    </StackLayout>
+                                                </ViewCell>
+                                            </DataTemplate>
+                                        </sharpnado:HorizontalListView.ItemTemplate>
+                                    </sharpnado:HorizontalListView>
+
+                                </StackLayout>
+
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                
+
+                </ListView>
+                
+            </StackLayout>
+
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1" 
+                               AbsoluteLayout.LayoutFlags="All"/>
+
+        </AbsoluteLayout>
     </ContentPage.Content>
 </mvvm:BaseView>

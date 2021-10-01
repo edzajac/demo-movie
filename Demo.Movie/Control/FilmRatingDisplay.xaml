@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Demo.Movie.Control.FilmRatingDisplay">
+    <ContentView.Content>
+        <StackLayout Spacing="2">
+            <Grid x:Name="FilmRatingDisplayGrid"
+                  HorizontalOptions="Start"
+                  ColumnSpacing="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+            </Grid>
+            <Label HorizontalOptions="Start"
+                   TextColor="{StaticResource Key=DarkPurple}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span x:Name="RatedCountLabel"/>
+                        <Span Text=" ratings"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

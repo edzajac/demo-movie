@@ -1,30 +1,33 @@
-﻿using Demo.Movie.Core.AppSetup;
-using Demo.Movie.Views;
+﻿using Demo.Movie.Views;
 using Xamarin.Forms;
 
 namespace Demo.Movie
 {
     public partial class App : Application
     {
-        public App(AppStart onStart)
+        public App(Core.AppSetup.AppStart onStart)
         {
-            AppContainer.Container = onStart.InitializeDependencies();
+            Core.Helpers.AkavacheCache.InitCache();
+
+            Core.AppSetup.AppContainer.Container = onStart.InitializeDependencies();
 
             InitializeComponent();
 
-            MainPage = new LandingPage();
+            // Sharpnado Forms Initializers
+
+            Sharpnado.HorizontalListView.Initializer.Initialize(true, false);
+            Sharpnado.MaterialFrame.Initializer.Initialize(false, false); 
+
+            MainPage = new NavigationPage(new LandingPage());
         }
 
-        protected override void OnStart()
-        {
-        }
+        protected override void OnStart() { }
+
+        protected override void OnResume() { }
 
         protected override void OnSleep()
         {
-        }
-
-        protected override void OnResume()
-        {
+            Core.Helpers.AkavacheCache.EnsureCaches();
         }
     }
 }

@@ -41,12 +41,5 @@ namespace Demo.Movie.Views.MVVM
 
             base.OnAppearing();
         }
-
-        protected override void OnDisappearing()
-        {
-            _initialized = 0;
-
-            base.OnDisappearing();
-        }
     }
 }
