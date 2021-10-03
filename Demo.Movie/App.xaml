@@ -25,11 +25,19 @@
                 <On Platform="Android" Value="Roboto-Regular.ttf#Roboto Regular" />
                 <On Platform="iOS" Value="Roboto-Regular" />
             </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="RiftDemiItalic">
+                <On Platform="Android" Value="Fort Foundry - Rift Demi Italic.otf#Fort Foundry - Rift Demi Italic" />
+                <On Platform="iOS" Value="Fort Foundry - Rift Demi Italic" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="GothamMedium">
+                <On Platform="Android" Value="GothamMedium.ttf#GothamMedium" />
+                <On Platform="iOS" Value="GothamMedium" />
+            </OnPlatform>
 
             <!-- Styles: <ObjectType><Description>Style i.e. LabelSectionHeaderStyle -->
 
             <Style x:Key="LabelNavBarHeaderStyle" TargetType="Label">
-                <!-- TODO: Add Rift font -->
+                <Setter Property="Font" Value="{StaticResource Key=RiftDemiItalic}"/>
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="FontAttributes" Value="Italic" />
             </Style>
@@ -56,7 +64,7 @@
             </Style>
 
             <Style TargetType="Button">
-                <!-- TODO: Add Gotham font -->
+                <Setter Property="Font" Value="{StaticResource Key=GothamMedium}"/>
                 <Setter Property="BorderColor" Value="{StaticResource Key=LightPurple}"/>
                 <Setter Property="BackgroundColor" Value="{StaticResource Key=LightPurple}"/>
                 <Setter Property="HeightRequest" Value="44"/>

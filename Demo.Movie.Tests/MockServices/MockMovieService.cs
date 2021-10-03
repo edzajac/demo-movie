@@ -10,7 +10,8 @@ namespace Demo.Movie.Tests.MockServices
     {
         private const int _FREE_DUDE_ID = 123456,
                           _SPIDER_SPY_ID = 789101,
-                          _MCDONALD_PALS_ID = 112131;
+                          _MCDONALD_PALS_ID = 112131,
+                          _BIG_TIME_ID = 345267;
 
         public MockMovieService() { }
 
@@ -80,7 +81,7 @@ namespace Demo.Movie.Tests.MockServices
                         {
                             id = _FREE_DUDE_ID,
                             adult = false,
-                            genre_ids = new int[] { 35,28,12,10751 },
+                            genre_ids = new int[] { 35,28,12 },
                             title = "Free Dude",
                             poster_path = "/free_dude_test.jpg",
                             release_date = "2021-08-11",
@@ -93,7 +94,7 @@ namespace Demo.Movie.Tests.MockServices
                         {
                             id = _SPIDER_SPY_ID,
                             adult = false,
-                            genre_ids = new int[] { 12 },
+                            genre_ids = new int[] { 12,10751 },
                             title = "Spider Spy",
                             poster_path = "/spider_spy_test.jpg",
                             release_date = "2021-02-23",
@@ -106,7 +107,7 @@ namespace Demo.Movie.Tests.MockServices
                         {
                             id = _MCDONALD_PALS_ID,
                             adult = false,
-                            genre_ids = new int[] { 16,10751 },
+                            genre_ids = new int[] { 12,16,10751 },
                             title = "Old McDonald Pals",
                             poster_path = "/old_mcdonald_pals_test.jpg",
                             release_date = "2021-08-27",
@@ -114,6 +115,19 @@ namespace Demo.Movie.Tests.MockServices
                             popularity = 4789,
                             vote_count = 1002,
                             vote_average = 5
+                        },
+                        new Film()
+                        {
+                            id = _BIG_TIME_ID,
+                            adult = false,
+                            genre_ids = new int[] { 35,10751 },
+                            title = "Big Time: The Movie",
+                            poster_path = "/big_time_test.jpg",
+                            release_date = "2021-08-27",
+                            overview = "This is a test overview for Big Time: The Movie.",
+                            popularity = 4500,
+                            vote_count = 1002,
+                            vote_average = 6
                         }
                     }
                 };
@@ -163,6 +177,20 @@ namespace Demo.Movie.Tests.MockServices
                                 {
                                     name = "Teaser Trailer",
                                     key = "MC00N410",
+                                    site = "MeTube"
+                                }
+                            }
+                        };
+
+                    case _BIG_TIME_ID:
+                        return new FilmTrailerResponse()
+                        {
+                            results = new List<FilmTrailer>()
+                            {
+                                new FilmTrailer()
+                                {
+                                    name = "Big Time Teaser Trailer",
+                                    key = "B15T1831",
                                     site = "MeTube"
                                 }
                             }
